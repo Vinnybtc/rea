@@ -743,3 +743,10 @@ it("keeps existing network endpoint recognition unchanged", () => {
     },
   ]);
 });
+
+it("keeps named spreads unknown without proving nullish aliases", () => {
+  expect(
+    rpcEndpoints(`var p=null;const root=Function("return this")();
+    root.p={url:"/changed"};httpLink({url:"/safe",...p});`),
+  ).toEqual([]);
+});
